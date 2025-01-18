@@ -5,7 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
+        green: {
+          basic: "#638C6D",
+        },
+        white: {
+          basic: "#FAFAFA",
+        },
         foreground: "var(--foreground)",
         "pastel-blue": "#A7C7E7",
         "pastel-purple": "#D6C3E0",
