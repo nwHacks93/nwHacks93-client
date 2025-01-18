@@ -8,7 +8,7 @@ const LoginPage: React.FC = () => {
   const handleOAuthLogin = async () => {
     try {
       await signInWithGoogle();
-      router.push("/user-app");
+      router.push("/app");
     } catch (error) {
       console.error("Error during OAuth login: ", error);
     }

@@ -24,7 +24,12 @@ export const signInWithGoogle = async () => {
   console.log("User signed in: ", user);
 };
 
-export const getUserDetails = () => {
+export const logout = () => {
+  document.cookie = "authToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"; // Set an expired date
+  console.log("User logged out");
+};
+
+export const getUserDetails = (): Promise<User> => {
   return new Promise((resolve, reject) => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
