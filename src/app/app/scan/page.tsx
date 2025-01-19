@@ -1,4 +1,4 @@
-import FooterNav from "@/app/components/footerNav";
+import { FooterNav } from "@/lib/components/NavBar";
 
 const ScanPage: React.FC = () => {
     return (

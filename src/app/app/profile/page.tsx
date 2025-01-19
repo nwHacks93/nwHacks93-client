@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "firebase/auth";
 import { getUserDetails } from "@/lib/firestore/auth";
-import FooterNav from "@/app/components/footerNav";
+import { FooterNav } from "@/lib/components/NavBar";
 
 //----------------------------------
 // Dummy Rewards for demonstration
