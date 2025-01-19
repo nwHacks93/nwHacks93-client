@@ -18,6 +18,9 @@ export default {
       },
       maxWidth: {
         content: "420px"
+      },
+      fontFamily: {
+        alegreya: ['Alegreya']
       }
     }
   },
