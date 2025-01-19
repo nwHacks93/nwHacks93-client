@@ -20,6 +20,7 @@ export const signInWithGoogle = async () => {
   const result = await signInWithPopup(auth, provider);
   const user = result.user;
   const token = await user.getIdToken();
+  localStorage.setItem("userEmail", user.email || "");
   document.cookie = `authToken=${token}; path=/; Secure; SameSite=Strict`;
   console.log("User signed in: ", user);
 };
