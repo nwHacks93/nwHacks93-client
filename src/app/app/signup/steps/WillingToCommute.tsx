@@ -57,7 +57,7 @@ export default function WillingToCommute(props: { profile: Map<string, any>; set
       <div>
         <div className='mt-10'>
           {items.map((item) => (
-            <label key={item} className='flex items-center gap-x-2 gap-y-5 mb-8'>
+            <label key={item} className='flex items-center gap-x-2 gap-y-5 mb-8 text-[#3F3632]'>
               <input
                 type='checkbox'
                 checked={selectedItems.includes(item)}

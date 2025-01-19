@@ -36,7 +36,7 @@ export default function PreferredGroupSize(props: { profile: Map<string, any>; s
       <div>
         <div className='mt-10'>
           {items.map((item) => (
-            <label key={item[0]} className='flex items-center gap-x-2 gap-y-5 mb-8'>
+            <label key={item[0]} className='flex items-center gap-x-2 gap-y-5 mb-8 text-[#3F3632]'>
               <input type='radio' checked={selectedItem === item[1]} onChange={() => handleCheckboxChange(item[1])} className='hidden' />
               {selectedItem === item[1] ? (
                 <Image src={checkBox} alt={checkBox} width={38} height={38} />
