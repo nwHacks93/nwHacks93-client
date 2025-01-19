@@ -61,6 +61,7 @@ const dummy_activities = [
 
 const DashboardPage: React.FC = () => {
   const [user, setUser] = useState<Profile | null>(null); // State to hold user information
+  const [loading, setLoading] = useState<boolean>(true); // State to track loading status
   const router = useRouter();
 
   useEffect(() => {
@@ -75,11 +76,23 @@ const DashboardPage: React.FC = () => {
         } else {
           setUser(userDetails); // Set user information in state
         }
-      } catch (error) {}
+      } catch (error) {
+        router.push("/login");
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
     };
 
     fetchUserDetails();
   }, [router]);
+
+  if (loading) {
+    return (
+      <div className='relative h-screen bg-gray-50'>
+        <div className='text-black space-x-4 space-y-10 p-10'>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     // Container that fixes the viewport height
