@@ -26,8 +26,8 @@ export const signInWithGoogle = async () => {
   console.log("User signed in: ", user);
 };
 
-export const logout = () => {
-  auth.signOut();
+export const logout = async () => {
+  await auth.signOut();
   document.cookie = "authToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"; // Set an expired date
   console.log("User logged out");
 };

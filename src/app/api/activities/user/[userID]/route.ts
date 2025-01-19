@@ -16,7 +16,7 @@ export async function GET(req: NextRequest, { params }: { params: { userID: stri
     const activitiesSnapshot = await getDocs(userActivitiesQuery);
 
     if (activitiesSnapshot.empty) {
-      return NextResponse.json({ message: "No activities found for this user" }, { status: 404 });
+      return NextResponse.json([], { status: 404 });
     }
 
     const activityIDs = activitiesSnapshot.docs.map((doc) => doc.data().activityID);
