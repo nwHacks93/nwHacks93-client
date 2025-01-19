@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "firebase/auth";
 import { getUserDetails } from "@/lib/firestore/auth";
+import FooterNav from "@/app/components/footerNav";
 
 //----------------------------------
 // Dummy Rewards for demonstration
@@ -174,7 +175,7 @@ const ProfilePage: React.FC = () => {
             router.push("/login");
         } else {
             setUser(userDetails);
-            setCurrentXP(userDetails.points ?? 0);
+            setCurrentXP(userDetails.points ?? 3246);
         }
         })();
     }, [router]);
@@ -206,68 +207,70 @@ const ProfilePage: React.FC = () => {
 
     return (
         <div className="relative min-h-screen bg-gray-50">
-        {/* Profile Header */}
-        <div className="p-8 flex items-center space-x-4">
-            <img
-            src={user?.photoURL || "Image"}
-            alt="Profile"
-            className="w-[100px] h-[100px] rounded-full border"
-            />
-            <div className="text-[#371B34] text-[30px] font-normal">
-            {user?.displayName || "Butter User"}
-            </div>
-        </div>
-
-        {/* XP Circle with 2s transition */}
-        <div className="flex flex-col items-center">
-            <XPCircle currentXP={currentXP} maxXP={maxXP} />
-        </div>
-
-        {/* Rewards */}
-        <div className="p-6 bg-white">
-            {/* Available Rewards */}
-            <h2 className="text-2xl font-normal text-black mt-8">
-            Available Rewards
-            </h2>
-            <div className="mt-4 space-y-4">
-            {availableRewards.length > 0 ? (
-                availableRewards.map((reward) => (
-                <RewardItem
-                    key={reward.id}
-                    reward={reward}
-                    canRedeem={true}
-                    onRedeem={handleRedeem}
+            {/* Profile Header */}
+            <div className="p-8 flex items-center space-x-4">
+                <img
+                src={user?.photoURL || "Image"}
+                alt="Profile"
+                className="w-[100px] h-[100px] rounded-full border"
                 />
-                ))
-            ) : (
-                <div className="text-gray-500">No rewards available yet.</div>
-            )}
-            </div>
-
-            {/* Locked Rewards */}
-            <h2 className="text-2xl font-normal text-black mt-10">
-            Earn more XP to redeem...
-            </h2>
-            <div className="mt-4 space-y-4">
-            {lockedRewards.length > 0 ? (
-                lockedRewards.map((reward) => (
-                <RewardItem
-                    key={reward.id}
-                    reward={reward}
-                    canRedeem={false}
-                    onRedeem={() => null}
-                />
-                ))
-            ) : (
-                <div className="text-gray-500">
-                You can currently redeem all listed rewards!
+                <div className="text-[#371B34] text-[30px] font-normal">
+                {user?.displayName || "Butter User"}
                 </div>
-            )}
             </div>
-        </div>
 
-        {/* Fake QR Code Modal */}
-        <FakeQRModal open={qrModalOpen} onClose={() => setQrModalOpen(false)} />
+            {/* XP Circle with 2s transition */}
+            <div className="flex flex-col items-center">
+                <XPCircle currentXP={currentXP} maxXP={maxXP} />
+            </div>
+
+            {/* Rewards */}
+            <div className="p-6 bg-white">
+                {/* Available Rewards */}
+                <h2 className="text-2xl font-normal text-black mt-8">
+                Available Rewards
+                </h2>
+                <div className="mt-4 space-y-4">
+                {availableRewards.length > 0 ? (
+                    availableRewards.map((reward) => (
+                    <RewardItem
+                        key={reward.id}
+                        reward={reward}
+                        canRedeem={true}
+                        onRedeem={handleRedeem}
+                    />
+                    ))
+                ) : (
+                    <div className="text-gray-500">No rewards available yet.</div>
+                )}
+                </div>
+
+                {/* Locked Rewards */}
+                <h2 className="text-2xl font-normal text-black mt-10">
+                Earn more XP to redeem...
+                </h2>
+                <div className="mt-4 space-y-4">
+                {lockedRewards.length > 0 ? (
+                    lockedRewards.map((reward) => (
+                    <RewardItem
+                        key={reward.id}
+                        reward={reward}
+                        canRedeem={false}
+                        onRedeem={() => null}
+                    />
+                    ))
+                ) : (
+                    <div className="text-gray-500">
+                    You can currently redeem all listed rewards!
+                    </div>
+                )}
+                </div>
+            </div>
+
+            {/* Fake QR Code Modal */}
+            <FakeQRModal open={qrModalOpen} onClose={() => setQrModalOpen(false)} />
+            
+            <FooterNav />
         </div>
     );
 };

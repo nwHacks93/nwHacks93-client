@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { getUserDetails } from "@/lib/firestore/auth";
 import { LogoutButton } from "@/lib/components/LogoutButton";
 import { Profile } from "../api/types";
+import FooterNav from "../components/footerNav";
 
 const dummy_challenges = [
   {
@@ -160,12 +161,7 @@ const DashboardPage: React.FC = () => {
       </div>
 
       {/* Footer - fixed at bottom and overlays content */}
-      <div className='fixed bottom-0 w-full text-gray-700 z-50 flex justify-around py-5' style={{ backgroundColor: "white" }}>
-        <button className='text-lg'>🏠</button>
-        <button className='text-lg'>🔄</button>
-        <button className='text-lg'>👥</button>
-        <button className='text-lg'>⚙️</button>
-      </div>
+      <FooterNav />
     </div>
   );
 };
