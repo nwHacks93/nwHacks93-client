@@ -175,7 +175,7 @@ const ProfilePage: React.FC = () => {
             router.push("/login");
         } else {
             setUser(userDetails);
-            setCurrentXP(userDetails.points ?? 0);
+            setCurrentXP(userDetails.points ?? 3246);
         }
         })();
     }, [router]);
