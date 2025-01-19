@@ -22,7 +22,7 @@ const QRCodeApp: React.FC = () => {
   }, [router]);
 
   return (
-    <div className='flex flex-col h-screen bg-gray-50'>
+    <div className='relative h-screen bg-gray-50'>
       <div className='flex flex-col items-center justify-center min-h-screen bg-[#638C6D] text-white px-4'>
         {/* Header */}
         <div className='text-2xl font-bold mb-6 text-center'>Your QR Code</div>
