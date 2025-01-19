@@ -31,14 +31,14 @@ export const logout = () => {
   console.log("User logged out");
 };
 
-export const getUserDetails = (): Promise<User> => {
-  return new Promise((resolve, reject) => {
+export const getUserDetails = (): Promise<User | null> => {
+  return new Promise((resolve) => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         resolve(user);
       } else {
         console.log("No user is signed in.");
-        reject(null);
+        resolve(null);
       }
     });
   });

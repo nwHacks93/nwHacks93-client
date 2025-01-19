@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { getUserDetails } from "@/lib/firestore/auth";
 import { LogoutButton } from "@/lib/components/LogoutButton";
 import { Profile } from "../api/types";
-import FooterNav from "../components/footerNav";
+import { FooterNav } from "@/lib/components/NavBar";
 
 const dummy_challenges = [
   {
@@ -69,17 +69,18 @@ const DashboardPage: React.FC = () => {
       try {
         const userID = localStorage.getItem("userEmail");
         const response = await fetch(`api/profile/${userID}`);
-        const userDetails: Profile = await response.json();
-        const details = await getUserDetails();
-        if (!userDetails || !userID || userID != details.email) {
-          router.push("/login"); // Redirect to login if no user is found
-        } else {
-          setUser(userDetails); // Set user information in state
+
+        if (!response.ok) {
+          router.push("/app/signup");
         }
+
+        const userDetails: Profile = await response.json();
+        console.log(userDetails);
+        setUser(userDetails);
       } catch (error) {
-        router.push("/login");
+        router.push("/app/signup");
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
 
@@ -101,7 +102,7 @@ const DashboardPage: React.FC = () => {
       <div className='overflow-y-auto h-full p-6 pb-24'>
         {/* Header User Info */}
         <div className='flex items-center justify-between space-x-4 mb-10'>
-          <span className='text-gray-700 text-2xl font-bold'>{user?.points || 9999} xp</span>
+          <span className='text-gray-700 text-2xl font-bold'>{user?.points || 0} xp</span>
           <img
             src={user?.photoURL || "Profile Picture"} // Placeholder for user profile image
             alt='Profile'
