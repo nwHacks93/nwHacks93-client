@@ -11,7 +11,7 @@ import { useStepNavigation } from "../hooks/useStepNavigation";
 export default function WillingToCommute() {
   const { handleNext } = useStepNavigation(4);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const items = ["Waling distance", "<20 min", "20+ min"];
+  const items = ["Waling distance", "< 20 min", "20+ min"];
 
   const handleCheckboxChange = (item: string) => {
     if (selectedItems.includes(item)) {
