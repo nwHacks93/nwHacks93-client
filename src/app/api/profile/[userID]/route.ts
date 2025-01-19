@@ -27,7 +27,7 @@ export async function GET(req: NextRequest, { params }: { params: { userID: stri
 }
 
 // Function to validate email format
-const validateEmail = (email: string) => {
+export const validateEmail = (email: string) => {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email);
 };
