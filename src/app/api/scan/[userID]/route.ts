@@ -15,6 +15,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { userID: st
 
   const { scanID } = body;
 
+  console.log;
   if (!validateEmail(userID) || !validateEmail(scanID)) {
     return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
   }

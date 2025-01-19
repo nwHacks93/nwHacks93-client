@@ -7,14 +7,14 @@ import { HomeIcon, UserIcon, CalendarDaysIcon, QrCodeIcon } from "@heroicons/rea
 
 export const FooterNav: React.FC = () => {
   const pathname = usePathname() || "";
-  function isActive(href: string) {
+  const isActive = (href: string) => {
     return pathname === href;
-  }
+  };
 
   return (
     <div
-      className='absolute bottom-0 left-0 right-0 bg-white-basic text-gray-700 z-50 
-                    flex flex-row justify-between py-3 border-t px-5'
+      className='fixed bottom-0 w-full left-0 right-0 bg-[white] text-gray-700 z-50 
+                    flex justify-around py-3 border-t'
     >
       {/* Home */}
       <Link href='/app' className='flex flex-col items-center'>
@@ -31,7 +31,7 @@ export const FooterNav: React.FC = () => {
       {/* Events */}
       <Link href='/app/events' className='flex flex-col items-center'>
         <CalendarDaysIcon className={`h-6 w-6 ${isActive("/app/events") ? "text-[#3F3632]" : "text-gray-500"}`} />
-        <span className={`text-sm ${isActive("/app/events") ? "text-[#3F3632]" : "text-gray-500"}`}>Upcoming</span>
+        <span className={`text-sm ${isActive("/app/events") ? "text-[#3F3632]" : "text-gray-500"}`}>Upcoming Events</span>
       </Link>
 
       {/* Scan Points */}
