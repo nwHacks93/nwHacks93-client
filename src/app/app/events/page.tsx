@@ -185,26 +185,20 @@ const EventsPage: React.FC = () => {
         </main>
 
         {/* QR Scanner Section */}
-        <div className='flex flex-col items-center p-4'>
+        {/* <div className='relative h-[300px] w-[300px]'>
           <QrReader
-            constraints={{ facingMode: isFlipped ? "environment" : "user" }}
-            onResult={handleScan}
-            videoStyle={{ width: "100%", height: "auto" }}
-            videoContainerStyle={{
-              width: "200px",
-              height: "auto",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              border: "2px solid #47807F", // Optional: Add a border for visibility
-              borderRadius: "8px", // Optional: Add rounded corners
-              overflow: "hidden" // Ensure no overflow
+            className='object-cover w-full md:w-[450px] flex justify-center items-center'
+            constraints={{
+              facingMode: isFlipped ? "user" : "environment"
             }}
+            videoStyle={{ objectFit: "cover", borderRadius: "10px" }}
+            scanDelay={250}
+            onResult={handleScan}
           />
           <button className='mt-4 bg-blue-500 text-white py-2 px-4 rounded' onClick={toggleCamera}>
             {isFlipped ? "Use Front Camera" : "Use Back Camera"}
           </button>
-        </div>
+        </div> */}
 
         {/* Footer navigation */}
         <FooterNav />

@@ -36,9 +36,10 @@ export default function SignupPage() {
       const userProfile = localStorage.getItem("userEmail");
       try {
         await fetch(`/api/profile/${userProfile}`);
+        router.push("/app");
       } catch (error) {
-        router.push("/");
-        logout();
+        // router.push("/");
+        // logout();
       }
     };
 
