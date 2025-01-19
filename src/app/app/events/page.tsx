@@ -4,6 +4,7 @@ import { FooterNav } from "@/lib/components/NavBar";
 import { useRouter } from "next/navigation";
 import { getUserDetails } from "@/lib/firestore/auth";
 import { Profile } from "@/app/api/types";
+import { QrReader } from "react-qr-reader";
 
 const dummy_events = [
   {
@@ -41,13 +42,15 @@ const dummy_events = [
 const EventsPage: React.FC = () => {
   const [user, setUser] = useState<Profile | null>(null); // State to hold user information
   const [upcomingActivities, setUpcomingActivities] = useState<any[]>([]); // State for upcoming activities
+  const [scanResult, setScanResult] = useState<string | null>(null);
+  const [isFlipped, setIsFlipped] = useState<boolean>(false); // State to track camera flip
   const router = useRouter();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         const userID = localStorage.getItem("userEmail");
-        const response = await fetch(`api/profile/${userID}`);
+        const response = await fetch(`/api/profile/${userID}`);
         const userDetails: Profile = await response.json();
         const details = await getUserDetails();
         if (!userDetails || !userID || !details || userID != details.email) {
@@ -112,6 +115,28 @@ const EventsPage: React.FC = () => {
     }
   };
 
+  const handleScan = async (result: any, error: any) => {
+    if (!!result) {
+      console.log(result);
+      const email = localStorage.getItem("userEmail");
+
+      await fetch(`/api/scan/${email}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json" // Specify the content type
+        },
+        body: JSON.stringify({ scannedData: result.text })
+      });
+    }
+
+    if (!!error) {
+    }
+  };
+
+  const toggleCamera = () => {
+    setIsFlipped(!isFlipped);
+  };
+
   return (
     <>
       <div className='relative h-screen bg-gray-50'>
@@ -158,6 +183,28 @@ const EventsPage: React.FC = () => {
             );
           })}
         </main>
+
+        {/* QR Scanner Section */}
+        <div className='flex flex-col items-center p-4'>
+          <QrReader
+            constraints={{ facingMode: isFlipped ? "environment" : "user" }}
+            onResult={handleScan}
+            videoStyle={{ width: "100%", height: "auto" }}
+            videoContainerStyle={{
+              width: "200px",
+              height: "auto",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              border: "2px solid #47807F", // Optional: Add a border for visibility
+              borderRadius: "8px", // Optional: Add rounded corners
+              overflow: "hidden" // Ensure no overflow
+            }}
+          />
+          <button className='mt-4 bg-blue-500 text-white py-2 px-4 rounded' onClick={toggleCamera}>
+            {isFlipped ? "Use Front Camera" : "Use Back Camera"}
+          </button>
+        </div>
 
         {/* Footer navigation */}
         <FooterNav />
