@@ -24,7 +24,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { userID: st
 
     const q1 = query(usersRef, where("email", "==", userID));
     const querySnapshot = await getDocs(q1);
-    const q2 = query(usersRef, where("email", "==", userID));
+    const q2 = query(usersRef, where("email", "==", scanID));
     const querySnapshotConn = await getDocs(q2);
 
     if (querySnapshot.empty || querySnapshotConn.empty) {
