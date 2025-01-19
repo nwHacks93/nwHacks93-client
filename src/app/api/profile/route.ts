@@ -17,8 +17,17 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { email, name, age, goal, group_size, distance } = body;
-    const docRef = await addDoc(collection(db, "users"), { email, name, age, goal, group_size, distance, points: 0 });
+    const { email, name, age, goal, group_size, distance, photoURL } = body;
+    const docRef = await addDoc(collection(db, "users"), {
+      email,
+      name,
+      age,
+      goal,
+      group_size,
+      distance,
+      points: 0,
+      ...(photoURL ? { photoURL } : {})
+    });
 
     return NextResponse.json({ id: docRef.id, message: "User added successfully" }, { status: 200 });
   } catch (error) {
@@ -30,7 +39,6 @@ export async function POST(req: NextRequest) {
 const validateUserInput = (data: { email: string; name: string; age: string; goal: string; group_size: string; distance: string }) => {
   const errors: string[] = [];
 
-  // Validate name
   if (!data.name) {
     errors.push("Name is required.");
   }
@@ -39,7 +47,6 @@ const validateUserInput = (data: { email: string; name: string; age: string; goa
     errors.push("Email is required.");
   }
 
-  // Validate age
   if (!data.age) {
     errors.push("Age is required.");
   } else {
@@ -49,20 +56,17 @@ const validateUserInput = (data: { email: string; name: string; age: string; goa
     }
   }
 
-  // Validate goal
   if (!data.goal) {
     errors.push("Goal is required.");
   }
 
-  // Validate group size
   if (!data.group_size) {
     errors.push("Group size is required.");
   }
 
-  // Validate distance
   if (!data.distance) {
     errors.push("Distance is required.");
   }
 
-  return errors; // Return an array of error messages
+  return errors;
 };
