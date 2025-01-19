@@ -17,8 +17,8 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { id, name, age, goal, group_size, distance } = body;
-    const docRef = await addDoc(collection(db, "users"), { id, name, age, goal, group_size, distance, points: 0 });
+    const { email, name, age, goal, group_size, distance } = body;
+    const docRef = await addDoc(collection(db, "users"), { email, name, age, goal, group_size, distance, points: 0 });
 
     return NextResponse.json({ id: docRef.id, message: "User added successfully" }, { status: 200 });
   } catch (error) {
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-const validateUserInput = (data: { id: string; name: string; age: string; goal: string; group_size: string; distance: string }) => {
+const validateUserInput = (data: { email: string; name: string; age: string; goal: string; group_size: string; distance: string }) => {
   const errors: string[] = [];
 
   // Validate name
@@ -35,8 +35,8 @@ const validateUserInput = (data: { id: string; name: string; age: string; goal: 
     errors.push("Name is required.");
   }
 
-  if (!data.id) {
-    errors.push("Name is required.");
+  if (!data.email) {
+    errors.push("Email is required.");
   }
 
   // Validate age
