@@ -116,7 +116,7 @@ const DashboardPage: React.FC = () => {
                 <div>
                   <p className='text-lg'>{challenge.xp} xp</p>
                   <h3 className='font-medium text-sm mt-2'>{challenge.title}</h3>
-                  <button className='text-lg text-sm font-bold mt-3 flex items-center justify-between'>
+                  <button className='text-sm lg:text-lg font-bold mt-3 flex items-center justify-between'>
                     Start Challenge
                     <svg xmlns='http://www.w3.org/2000/svg' width='20' height='21' viewBox='0 0 15 16' fill='none' className='ml-2'>
                       <path

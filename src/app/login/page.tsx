@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { signInWithGoogle } from "@/lib/firestore/auth";
+import React, { useEffect } from "react";
+import { getUserDetails, signInWithGoogle } from "@/lib/firestore/auth";
 import { useRouter } from "next/navigation";
 
 const LoginPage: React.FC = () => {
@@ -13,6 +13,17 @@ const LoginPage: React.FC = () => {
       console.error("Error during OAuth login: ", error);
     }
   };
+
+  useEffect(() => {
+    const checkSignedIn = async () => {
+      const userDetails = await getUserDetails();
+      if (userDetails.email) {
+        router.push("/app");
+      }
+    };
+
+    checkSignedIn();
+  }, []);
 
   return (
     <div className='bg-pastel-blue flex items-center justify-center min-h-screen'>
