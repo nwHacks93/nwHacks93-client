@@ -12,5 +12,5 @@ export type Profile = {
   distance: string;
   age: number;
   email: string;
-  photoUrl?: string;
+  photoURL?: string;
 };
