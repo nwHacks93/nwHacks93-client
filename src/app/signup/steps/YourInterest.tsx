@@ -4,9 +4,11 @@ import { useState } from "react";
 import Button from "../components/Button";
 import Indicator from "../components/Indicator";
 import WordChip from "../components/WordChip";
+import { useStepNavigation } from "../hooks/useStepNavigation";
 
 export default function YourInterest() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const { handleNext } = useStepNavigation(4);
 
   const list = [
     "Gaming",
@@ -50,7 +52,7 @@ export default function YourInterest() {
         <Indicator step={1} />
       </div>
       <div className="w-full pt-[2.5rem] flex justify-center">
-        <Button>Continue</Button>
+        <Button onClick={handleNext}>Continue</Button>
       </div>
     </div>
   );
