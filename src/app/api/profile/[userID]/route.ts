@@ -3,7 +3,7 @@ import { db } from "@/lib/firestore/db";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 export async function GET(req: NextRequest, { params }: { params: { userID: string } }) {
-  const { userID } = params;
+  const { userID } = await params;
 
   if (!validateEmail(userID)) {
     return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
