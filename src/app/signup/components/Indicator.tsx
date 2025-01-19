@@ -1,4 +1,4 @@
-export default function Indicator({ step }: { step: number }) {
+export default function Indicator({ step }: { step: 0 | 1 | 2 | 3 }) {
   const totalSteps = 4;
 
   return (
