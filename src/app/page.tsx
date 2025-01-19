@@ -11,7 +11,7 @@ export default function Home() {
     router.push("/login");
   }
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[white]">
+    <div className="relative w-full h-screen overflow-hidden bg-[#638C6D]">
       {/* <Image
         src={ladingCircle}
         alt="ladingCircle"
@@ -27,10 +27,10 @@ export default function Home() {
           className="mb-10" 
         />
 
-        <h1 className="text-3xl md:text-4xl text-[#A7774C] font-bold mb-2 text-center">
+        <h1 className="text-3xl md:text-4xl text-[white] font-bold mb-2 text-center">
           Welcome to Butter!
         </h1>
-        <p className="text-lg md:text-xl text-[#A7774C] text-center mb-8 w-3/4 md:w-1/2">
+        <p className="text-lg md:text-xl text-[white] text-center mb-8 w-3/4 md:w-1/2">
           Where we smoothen your social experience!
         </p>
 
