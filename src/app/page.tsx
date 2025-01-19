@@ -1,7 +1,13 @@
+"use client"
 import ladingCircle from "@/assets/icons/ladingCircle.svg";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const handleGetStarted = () => {
+    router.push("/login");
+  }
   return (
     <>
       <Image
@@ -13,11 +19,13 @@ export default function Home() {
         <div className="h-[100%] pt-[10rem] gap-[12.5rem] flex font-bold flex-col justify-center items-center whitespace-pre text-white-basic text-[45px] z-10">
           <div className="flex flex-col items-center">
             <h1>Welcome to _____!</h1>
-            <h1 className="w-[100%] text-center text-[35px] whitespace-pre-wrap">
-              {`Where you can connect \n ‘em all.`}
+            <h1 className="w-[100%] text-center text-[30px] whitespace-pre-wrap">
+              {`Where you can connect ‘em all.`}
             </h1>
           </div>
-          <button className="bg-[#3F3632] font-[#2rem] font-weight-[#500] w-[80%] z-10 py-[1.25rem] rounded-lg text-[25px]">
+          <button 
+          onClick={handleGetStarted}
+          className="bg-[#3F3632] font-[#2rem] font-weight-[#500] w-[80%] z-10 py-[1.25rem] rounded-lg text-[25px]">
             Get Started!
           </button>
         </div>

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { getUserDetails } from "@/lib/db/auth";
+import { getUserDetails } from "@/lib/firestore/auth";
 import { LogoutButton } from "@/lib/components/LogoutButton";
 
 const dummy_challenges = [

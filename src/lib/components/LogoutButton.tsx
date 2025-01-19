@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-import { logout } from "@/lib/db/auth";
+import { logout } from "@/lib/firestore/auth";
 import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
 
 export const LogoutButton: React.FC = () => {

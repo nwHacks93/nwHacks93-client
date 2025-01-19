@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { signInWithGoogle } from "@/lib/db/auth";
+import { signInWithGoogle } from "@/lib/firestore/auth";
 import { useRouter } from "next/navigation";
 
 const LoginPage: React.FC = () => {
