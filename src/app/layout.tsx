@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
-import { Alegreya } from "next/font/google";
+import { Alegreya, Alegreya_Sans } from "next/font/google";
 import "./globals.css";
 
 const alegreya = Alegreya({
   variable: "--font-alegreya",
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  style: ["normal", "italic"],
+});
+
+const alegreya_Sans = Alegreya_Sans({
+  variable: "--font-alegreya_Sans",
   subsets: ["latin"],
   weight: ["400", "700", "900"],
   style: ["normal", "italic"],
@@ -27,7 +34,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${alegreya.variable} antialiased `}>{children}</body>
+      <body
+        className={`${alegreya.variable} ${alegreya_Sans.variable} antialiased `}
+      >
+        {children}
+      </body>
     </html>
   );
 }
