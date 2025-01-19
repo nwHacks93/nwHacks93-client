@@ -49,7 +49,7 @@ const EventsPage: React.FC = () => {
         const response = await fetch(`api/profile/${userID}`);
         const userDetails: Profile = await response.json();
         const details = await getUserDetails();
-        if (!userDetails || !userID || userID != details.email) {
+        if (!userDetails || !userID || !details ||  userID != details.email) {
           router.push("/login"); // Redirect to login if no user is found
         } else {
           setUser(userDetails); // Set user information in state
