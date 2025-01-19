@@ -78,6 +78,40 @@ const EventsPage: React.FC = () => {
     fetchUpcomingActivities();
   }, [router]);
 
+  const handleClick = async (activity: string) => {
+    const email = localStorage.getItem("userEmail");
+    const body = JSON.stringify({
+      activityID: activity,
+      email
+    });
+
+    console.log(body);
+
+    try {
+      const response = await fetch("/api/activities", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json" // Specify the content type
+        },
+        body
+      });
+
+      if (!response.ok) {
+        // Handle error response
+        const errorData = await response.json();
+        console.error("Error:", errorData);
+        throw new Error(`Error: ${response.status} ${errorData.message || "Unknown error"}`);
+      }
+
+      // Optionally handle the response data
+      const data = await response.json();
+      console.log("Success:", data);
+      // You can also update the state or perform other actions based on the response
+    } catch (error) {
+      console.error("Error during POST request:", error);
+    }
+  };
+
   return (
     <>
       <div className='relative h-screen bg-gray-50'>
@@ -106,8 +140,13 @@ const EventsPage: React.FC = () => {
                   <span className='bg-gray-800 text-white text-xs px-3 py-1 rounded-lg'>{activity.group_size}</span>
                   <span className='bg-gray-800 text-white text-xs px-3 py-1 rounded-lg'>{activity.distance}</span>
                 </div>
-                <button className='flex justify-between items-center text-white text-m py-2 rounded-lg mt-2 font-bold'>
-                  View Details
+                <button
+                  className='flex justify-between items-center text-white text-m py-2 rounded-lg mt-2 font-bold'
+                  onClick={() => {
+                    handleClick(activity.name);
+                  }}
+                >
+                  RSVP
                   <svg xmlns='http://www.w3.org/2000/svg' width='20' height='21' viewBox='0 0 15 16' fill='none' className='ml-2'>
                     <path
                       d='M7.5 0.929443C3.36425 0.929443 0 4.17526 0 8.16474C0 12.1542 3.36425 15.4 7.5 15.4C11.6358 15.4 15 12.1542 15 8.16474C15 4.17526 11.6358 0.929443 7.5 0.929443ZM10.4816 8.41823L6.10658 11.1315C6.05531 11.1635 5.9961 11.1795 5.93751 11.1795C5.88624 11.1795 5.83436 11.1671 5.78798 11.1427C5.68726 11.0897 5.625 10.9884 5.625 10.878V5.4515C5.625 5.34111 5.68726 5.23981 5.78798 5.18682C5.88686 5.13442 6.01075 5.13764 6.10658 5.19801L10.4816 7.91125C10.5707 7.96659 10.625 8.06228 10.625 8.16474C10.625 8.26719 10.5707 8.36286 10.4816 8.41823Z'
