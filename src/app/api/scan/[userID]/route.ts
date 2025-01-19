@@ -5,25 +5,43 @@ import { validateEmail } from "../../profile/[userID]/route";
 
 export async function PATCH(req: NextRequest, { params }: { params: { userID: string } }) {
   const { userID } = await params;
+  let body;
 
-  if (!validateEmail(userID)) {
+  try {
+    body = await req.json();
+  } catch (error) {
+    return NextResponse.json({ error: `Invalid request body, ${JSON.stringify(error, null, 2)}` }, { status: 400 });
+  }
+
+  const { scanID } = body;
+
+  if (!validateEmail(userID) || !validateEmail(scanID)) {
     return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
   }
 
   try {
     const usersRef = collection(db, "users");
-    const q = query(usersRef, where("id", "==", userID));
-    const querySnapshot = await getDocs(q);
 
-    if (querySnapshot.empty) {
+    const q1 = query(usersRef, where("email", "==", userID));
+    const querySnapshot = await getDocs(q1);
+    const q2 = query(usersRef, where("email", "==", userID));
+    const querySnapshotConn = await getDocs(q2);
+
+    if (querySnapshot.empty || querySnapshotConn.empty) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const userDoc = querySnapshot.docs[0];
-    const userRef = doc(db, "users", userDoc.id);
+    const userDoc1 = querySnapshot.docs[0];
+    const userRef = doc(db, "users", userDoc1.id);
+
+    const userDoc2 = querySnapshotConn.docs[0];
+    const userRef2 = doc(db, "users", userDoc2.id);
 
     await updateDoc(userRef, {
-      points: (userDoc.data().points || 0) + 75
+      points: (userDoc1.data().points || 0) + 75
+    });
+    await updateDoc(userRef2, {
+      points: (userDoc2.data().points || 0) + 75
     });
 
     return NextResponse.json({ message: "Points incremented successfully" }, { status: 200 });

@@ -11,7 +11,7 @@ export async function GET(req: NextRequest, { params }: { params: { userID: stri
 
   try {
     const usersRef = collection(db, "users");
-    const q = query(usersRef, where("id", "==", userID));
+    const q = query(usersRef, where("email", "==", userID));
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
