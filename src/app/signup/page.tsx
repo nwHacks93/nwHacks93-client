@@ -1,7 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { JSX, useEffect, useState } from "react";
 import GetName from "./steps/GetName";
 import PreferredGroupSize from "./steps/PreferredGroupSize";
