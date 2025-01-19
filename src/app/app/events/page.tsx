@@ -40,6 +40,7 @@ const dummy_events = [
 
 const EventsPage: React.FC = () => {
   const [user, setUser] = useState<Profile | null>(null); // State to hold user information
+  const [upcomingActivities, setUpcomingActivities] = useState<any[]>([]); // State for upcoming activities
   const router = useRouter();
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const EventsPage: React.FC = () => {
         const response = await fetch(`api/profile/${userID}`);
         const userDetails: Profile = await response.json();
         const details = await getUserDetails();
-        if (!userDetails || !userID || !details ||  userID != details.email) {
+        if (!userDetails || !userID || !details || userID != details.email) {
           router.push("/login"); // Redirect to login if no user is found
         } else {
           setUser(userDetails); // Set user information in state
@@ -57,12 +58,29 @@ const EventsPage: React.FC = () => {
       } catch (error) {}
     };
 
+    const fetchUpcomingActivities = async () => {
+      try {
+        const response = await fetch(`/api/activities/upcoming`);
+        const activities = await response.json();
+        if (Array.isArray(activities)) {
+          setUpcomingActivities(activities);
+        } else {
+          console.warn("Expected an array but got:", activities);
+          setUpcomingActivities([]);
+        }
+      } catch (error) {
+        console.error("Error fetching upcoming activities:", error);
+        setUpcomingActivities([]);
+      }
+    };
+
     fetchUserDetails();
+    fetchUpcomingActivities();
   }, [router]);
 
   return (
     <>
-      <div className='flex min-h-screen flex-col bg-gray-50'>
+      <div className='relative h-screen bg-gray-50'>
         <header className='flex items-center justify-between bg-white px-4 py-3 shadow-sm'>
           <h2 className='text-3xl mt-4 font-normal tracking-wide text-gray-800 sm:text-xl'>Upcoming events</h2>
           {/* <img
@@ -73,36 +91,33 @@ const EventsPage: React.FC = () => {
         </header>
 
         <main className='flex-1 overflow-auto p-4'>
-          {dummy_events.map((activity, index) => (
-            <div
-              key={index}
-              className='mx-auto mb-6 w-full max-w-md rounded-xl p-4 text-white shadow-md'
-              style={{ backgroundColor: activity.color }}
-            >
-              <div className='mb-2 flex items-start items-center justify-between'>
-                <h1 className='text-xl font-bold'>{activity.name}</h1>
-                <div className='text-right text-sm leading-tight'>{activity.location}</div>
-              </div>
+          {upcomingActivities.map((activity, index) => {
+            const activityTime = new Date(activity.activityTime.seconds * 1000);
+            const formattedTime = activityTime.toLocaleString();
 
-              <hr className='my-2 border-white/30' />
-
-              <div className='mt-4 flex gap-2 sm:flex-row sm:items-center sm:justify-between'>
-                <div className='flex-col pr-2'>
-                  <p className='mb-2 text-base font-semibold'>{activity.date_time}</p>
-                  <p className='leading-relaxed mb-7'>{activity.description}</p>
-
-                  <div className='flex items-center justify-between sm:flex-col sm:items-start sm:justify-start sm:gap-1 text-sm font-light'>
-                    <span>Attendees - {activity.attendees}</span>
-                    <span>Average Age - {activity.average_age}</span>
-                  </div>
+            return (
+              <div key={index} className='text-white p-6 rounded-3xl shadow-md mb-7' style={{ backgroundColor: "#47807F" }}>
+                <div className='flex justify-between items-center'>
+                  <h3 className='font-semibold text-2xl'>{activity.name}</h3>
+                  <p className='text-sm'>{formattedTime}</p>
                 </div>
-
-                <div className='h-[150px] w-[110px] flex-shrink-0 overflow-hidden rounded-md'>
-                  <img src={activity.image} alt={activity.name} className='h-full w-full object-cover' />
+                <p className='text-sm mt-2'>{activity.description}</p>
+                <div className='flex space-x-2 mt-4'>
+                  <span className='bg-gray-800 text-white text-xs px-3 py-1 rounded-lg'>{activity.group_size}</span>
+                  <span className='bg-gray-800 text-white text-xs px-3 py-1 rounded-lg'>{activity.distance}</span>
                 </div>
+                <button className='flex justify-between items-center text-white text-m py-2 rounded-lg mt-2 font-bold'>
+                  View Details
+                  <svg xmlns='http://www.w3.org/2000/svg' width='20' height='21' viewBox='0 0 15 16' fill='none' className='ml-2'>
+                    <path
+                      d='M7.5 0.929443C3.36425 0.929443 0 4.17526 0 8.16474C0 12.1542 3.36425 15.4 7.5 15.4C11.6358 15.4 15 12.1542 15 8.16474C15 4.17526 11.6358 0.929443 7.5 0.929443ZM10.4816 8.41823L6.10658 11.1315C6.05531 11.1635 5.9961 11.1795 5.93751 11.1795C5.88624 11.1795 5.83436 11.1671 5.78798 11.1427C5.68726 11.0897 5.625 10.9884 5.625 10.878V5.4515C5.625 5.34111 5.68726 5.23981 5.78798 5.18682C5.88686 5.13442 6.01075 5.13764 6.10658 5.19801L10.4816 7.91125C10.5707 7.96659 10.625 8.06228 10.625 8.16474C10.625 8.26719 10.5707 8.36286 10.4816 8.41823Z'
+                      fill='white'
+                    />
+                  </svg>
+                </button>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </main>
 
         {/* Footer navigation */}

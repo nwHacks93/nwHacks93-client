@@ -13,8 +13,8 @@ export const FooterNav: React.FC = () => {
 
   return (
     <div
-      className='absolute bottom-0 left-0 right-0 bg-white-basic text-gray-700 z-50 
-                    flex flex-row justify-between py-3 border-t px-5'
+      className='absolute bottom-0 left-0 right-0 w-full items-center bg-gray-50 text-gray-700 z-50 
+                    flex flex-row justify-between py-3 border-t px-5 min-h-min'
     >
       {/* Home */}
       <Link href='/app' className='flex flex-col items-center'>
